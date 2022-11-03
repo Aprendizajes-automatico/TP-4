@@ -1,4 +1,5 @@
 import numpy as np
+import math
 
 def filtrar_por_clase_primaria(conjunto, clase):
     return conjunto.where(conjunto['sigdz'] == clase)
@@ -9,16 +10,28 @@ def sacar_clase_primaria_pd(conjunto):
 def sacar_clase_primaria_np(conjunto):
     return conjunto.iloc[:, :-1]
 
-"""
-def filtrar_por_clase_primaria(conjunto, clase):
+def filtrar_por_clase_primaria_v2(conjunto, clase):
     return conjunto[conjunto[:,-1] == clase]
 
-def sacar_clase_primaria_pd(conjunto):
-    return conjunto.iloc[:, :-1]
-
-def sacar_clase_primaria_np(conjunto):
+def sacar_clase_primaria_v2(conjunto):
     return np.delete(conjunto, -1, axis=1)
-"""
+
+def quedarse_valores_clase_primaria(conjunto):
+    return conjunto[:,-1]
+
+def estandarizar_atributos(conjunto, attribute_names):    
+    for i, atributo in enumerate(attribute_names):
+        nuevos_valores_estandarizados = []
+        columna = conjunto[atributo] 
+        # obtengo la media de los atributos elegidos
+        media = columna.mean()
+        desviacion = columna.std()        
+        for valor in columna:
+            nuevos_valores_estandarizados.append((valor - media) / desviacion)
+        conjunto[atributo] = nuevos_valores_estandarizados        
+    
+    return conjunto    
+        
 
 def obtener_conjuntos_de_datos(conjunto):
     p80 = len(conjunto) * 0.80
