@@ -1,5 +1,25 @@
 import numpy as np
 
+def filtrar_por_clase_primaria(conjunto, clase):
+    return conjunto.where(conjunto['sigdz'] == clase)
+
+def sacar_clase_primaria_pd(conjunto):
+    return conjunto.iloc[:, :-1]
+
+def sacar_clase_primaria_np(conjunto):
+    return conjunto.iloc[:, :-1]
+
+"""
+def filtrar_por_clase_primaria(conjunto, clase):
+    return conjunto[conjunto[:,-1] == clase]
+
+def sacar_clase_primaria_pd(conjunto):
+    return conjunto.iloc[:, :-1]
+
+def sacar_clase_primaria_np(conjunto):
+    return np.delete(conjunto, -1, axis=1)
+"""
+
 def obtener_conjuntos_de_datos(conjunto):
     p80 = len(conjunto) * 0.80
     p20 = len(conjunto) * 0.20
