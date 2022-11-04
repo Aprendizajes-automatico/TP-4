@@ -14,6 +14,7 @@ def kMediasNp(conjunto_original, k, conjunto_actualizado=np.zeros(0)):
     cantidad_columnas = conjunto_original.shape[1] - 1
 
     while not np.all(conjunto_original == conjunto_actualizado):
+        print("Itero")
         centroides = []
         if not conjunto_actualizado:
             conjunto_actualizado = conjunto_original 
@@ -36,6 +37,7 @@ def kMediasNp(conjunto_original, k, conjunto_actualizado=np.zeros(0)):
         print(centroides)
         nuevas_clases = []
         # Por fila
+        print(len(conjunto_original))
         for i in range(len(conjunto_original)):
             # Distancias por fila
             distancias = np.zeros(len(centroides))
@@ -43,9 +45,10 @@ def kMediasNp(conjunto_original, k, conjunto_actualizado=np.zeros(0)):
             for c, centroide in enumerate(centroides):
                 # Valor de la columna
                 for j in range(cantidad_columnas):
-                    distancias[c] += (centroide[j] - conjunto_original[i,j]) ** 2
+                    distancias[c] += pow((abs(centroide[j] - conjunto_original[i,j])), 2)
                 
-            distancias = list(map(lambda distancia: distancia ** 1/2, distancias))
+            distancias = list(map(lambda distancia: np.sqrt(distancia), distancias))
+            print(distancias)
             #conjunto_actualizado[i,cantidad_columnas]= distancias.index(min(distancias))
             conjunto_actualizado[i,4] = distancias.index(min(distancias))
             nuevas_clases.append(distancias.index(min(distancias)))
