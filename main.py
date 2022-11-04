@@ -14,8 +14,7 @@ k = 2
 actual_con_clase_aleatoria = poner_clase_aleatoria(actual_X, k)
 actual_estandarizado = estandarizar_atributos(actual_con_clase_aleatoria, ['age', 'cad.dur', 'choleste' ]).to_numpy()
 a = kMediasNp(actual_estandarizado, k)
-print(actual_estandarizado)
-print("-----------")
-print(a)
+#print("-----------")
+#print(a)
 
 
