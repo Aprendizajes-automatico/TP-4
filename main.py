@@ -3,7 +3,7 @@ import pandas as pd
 from kMedias import poner_clase_aleatoria, kMediasNp
 from utils import sacar_clase_primaria_pd, estandarizar_atributos, quedarse_valores_clase_primaria
 
-conjunto = pd.read_csv("acath2.csv", encoding= 'unicode_escape')
+conjunto = pd.read_csv("acath.csv", encoding= 'unicode_escape')
 actual_Y = conjunto.iloc[:, -1]
 actual_X = sacar_clase_primaria_pd(conjunto)
 # Reemplaza los vacíos por NaN
