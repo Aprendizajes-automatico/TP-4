@@ -46,6 +46,19 @@ def obtener_distancias(fila_valores, centroides):
     distancias = [abs(np.sqrt(distancia)) for distancia in distancias]
     return distancias
 
+def poner_ceros_en_fila_columna(conjunto, fila_columnas):
+    nuevo_conjunto = np.copy(conjunto)
+    for i in range(len(nuevo_conjunto)):
+        for j in range(np.shape(nuevo_conjunto)[1]):
+            if(np.isin(i, fila_columnas).any() or np.isin(j, fila_columnas).any()):
+                nuevo_conjunto[i,j] = 0
+    return nuevo_conjunto
+
+def eliminar_fila_columna(conjunto, fila_columna):
+    conjunto = np.delete(conjunto, fila_columna, axis=0)
+    conjunto = np.delete(conjunto, fila_columna, axis=1)
+    return conjunto
+
 def obtener_conjuntos_de_datos(conjunto):
     p80 = len(conjunto) * 0.80
     p20 = len(conjunto) * 0.20
