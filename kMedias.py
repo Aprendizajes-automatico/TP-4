@@ -1,6 +1,6 @@
 import random
 import numpy as np
-from utils import quedarse_valores_clase_primaria, sacar_clase_primaria_pd, filtrar_por_clase_primaria_v2, sacar_clase_primaria_v2
+from utils import obtener_distancias, filtrar_por_clase_primaria_v2, sacar_clase_primaria_v2
 
 def poner_clase_aleatoria(conjunto, k):
     lista_clases = []
@@ -30,16 +30,7 @@ def kMediasNp(conjunto_original, k, iter_max = 100):
         conjunto_sin_clase_primaria = sacar_clase_primaria_v2(conjunto_original)
         # Itera por cantidad totales de filas. Son todos los datos del conjunto
         for i in range(len(conjunto_sin_clase_primaria)):
-            # k = 2 -> [0,0]
-            distancias = np.zeros(len(centroides))
-            # Centroide es una lista de los valores centroides
-            for c, centroide in enumerate(centroides):
-                # Indice de cada columna -> 4
-                for j in range(cantidad_columnas):
-                    # Fórmula para distancia entre 2 vectores. (un centroide y una fila de valores)                
-                    distancias[c] += pow((conjunto_original[i,j] - centroide[j]), 2)
-            # Aplica raiz cuadrada a los dos resultados de los centroides
-            distancias = [abs(np.sqrt(distancia)) for distancia in distancias]
+            distancias = obtener_distancias(conjunto_original[i], centroides)
             # Se queda con el valor mas chico y lo pone el como clase primaria a la fila que está iterando
             conjunto_actualizado[i, cantidad_columnas] = distancias.index(min(distancias))
         iter += 1

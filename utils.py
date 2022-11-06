@@ -31,7 +31,20 @@ def estandarizar_atributos(conjunto, attribute_names):
         conjunto[atributo] = nuevos_valores_estandarizados        
     
     return conjunto    
-        
+
+def obtener_distancias(fila_valores, centroides):
+    #cantidad_columnas = fila_valores.shape[1] - 1
+    # k = 2 -> [0,0]
+    distancias = np.zeros(len(centroides))
+    # Centroide es una lista de los valores centroides
+    for c, centroide in enumerate(centroides):
+        # Indice de cada columna -> 4
+        for j in range(len(fila_valores) - 1):
+            # Fórmula para distancia entre 2 vectores. (un centroide y una fila de valores)                
+            distancias[c] += pow((fila_valores[j] - centroide[j]), 2)
+    # Aplica raiz cuadrada a los dos resultados de los centroides
+    distancias = [abs(np.sqrt(distancia)) for distancia in distancias]
+    return distancias
 
 def obtener_conjuntos_de_datos(conjunto):
     p80 = len(conjunto) * 0.80
@@ -40,16 +53,3 @@ def obtener_conjuntos_de_datos(conjunto):
 
 def flattenList(list):
     return [item for sublist in list for item in sublist]
-
-def clasificar_imagen(conjunto, clase):
-    nuevo_conjunto = np.empty((len(conjunto), 4))
-    for i in range(len(conjunto)):
-        for j in range(4):
-            if(j == 3):
-                nuevo_conjunto[i,j] = clase
-            else:
-                nuevo_conjunto[i,j] = conjunto[i,j]
-    return nuevo_conjunto
-
-def obtener_y_de_imagen(cantidad, clase):
-    return [clase for i in range(cantidad)]
