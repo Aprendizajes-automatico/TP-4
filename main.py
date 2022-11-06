@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 from kMedias import poner_clase_aleatoria, kMediasNp
 from utils import sacar_clase_primaria_pd, estandarizar_atributos, quedarse_valores_clase_primaria
-from AgrupamientoJerarquico import agrupamiento_jerarquico, criterio_minimo
+from AgrupamientoJerarquico import agrupamiento_jerarquico, criterio_minimo, criterio_maximo
 
 conjunto = pd.read_csv("acath2.csv", encoding= 'unicode_escape')
 actual_Y = conjunto.iloc[:, -1]
@@ -18,5 +18,7 @@ actual_estandarizado = estandarizar_atributos(actual_con_clase_aleatoria, ['age'
 #print("-----------")
 #print(quedarse_valores_clase_primaria(actual_estandarizado))
 #print(quedarse_valores_clase_primaria(agrupamiento_k_medias))
-agrupamiento_jerarquico(actual_estandarizado, criterio_minimo)
+
+#agrupamiento_jerarquico(actual_estandarizado, criterio_minimo)
+agrupamiento_jerarquico(actual_estandarizado, criterio_maximo)
 

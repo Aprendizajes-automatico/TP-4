@@ -55,7 +55,9 @@ def poner_ceros_en_fila_columna(conjunto, fila_columnas):
     return nuevo_conjunto
 
 def eliminar_fila_columna(conjunto, fila_columna):
+    # Axis = 0 elimina la fila
     conjunto = np.delete(conjunto, fila_columna, axis=0)
+    # Axis = 1 elimina la columna
     conjunto = np.delete(conjunto, fila_columna, axis=1)
     return conjunto
 

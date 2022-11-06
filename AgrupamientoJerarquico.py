@@ -1,5 +1,6 @@
 from utils import sacar_clase_primaria_v2, obtener_distancias, eliminar_fila_columna
 import numpy as np
+import plotly.figure_factory as ff
 
 def agrupamiento_jerarquico(conjunto, criterio):
     #conjunto = sacar_clase_primaria_v2(conjunto)
@@ -19,10 +20,12 @@ def agrupamiento_jerarquico(conjunto, criterio):
         matriz_distancias[fila1] = distancias
         primeros_grupos.append([valor, f'({fila1} - {fila2})'])
         matriz_distancias = eliminar_fila_columna(matriz_distancias, fila2)
+        """
         print("--------------------")
         print(minimo)
         print(matriz_distancias)
         print("--------------------")
+        """
     print(primeros_grupos)
     print(matriz_distancias)
 
@@ -40,6 +43,21 @@ def criterio_minimo(matriz, fila1, fila2):
     for i in range(np.shape(matriz)[1]):
         x = matriz[fila1][i]
         y = matriz[fila2][i]
-        distancias_minimas.append(x if x <= y else y)
+        distancias_minimas.append(x if x < y else y)
     return distancias_minimas
 
+def criterio_maximo(matriz, fila1, fila2):
+    distancias_maximas = []
+    for i in range(np.shape(matriz)[1]):
+        x = matriz[fila1][i]
+        y = matriz[fila2][i]
+        if (x == 0 or y == 0):
+            distancias_maximas.append(0)    
+        else:
+            distancias_maximas.append(x if x > y else y)
+    return distancias_maximas
+
+def plotear_agrupamiento(conjunto):        
+    fig = ff.create_dendrogram(conjunto)
+    fig.update_layout(width=800, height=500)
+    fig.show()
