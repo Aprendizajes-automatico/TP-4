@@ -1,5 +1,6 @@
 import numpy as np
 import math
+import random
 
 def filtrar_por_clase_primaria(conjunto, clase):
     return conjunto.where(conjunto['sigdz'] == clase)
@@ -32,16 +33,16 @@ def estandarizar_atributos(conjunto, attribute_names):
     
     return conjunto    
 
-def obtener_distancias(fila_valores, centroides):
+def obtener_distancias(fila_valores, puntos):
     #cantidad_columnas = fila_valores.shape[1] - 1
     # k = 2 -> [0,0]
-    distancias = np.zeros(len(centroides))
-    # Centroide es una lista de los valores centroides
-    for c, centroide in enumerate(centroides):
+    distancias = np.zeros(len(puntos))
+    # Puntos es una lista, [[x1,x2,x3,x4...,xn]]
+    for p, punto in enumerate(puntos):
         # Indice de cada columna -> 4
         for j in range(len(fila_valores) - 1):
             # Fórmula para distancia entre 2 vectores. (un centroide y una fila de valores)                
-            distancias[c] += pow((fila_valores[j] - centroide[j]), 2)
+            distancias[p] += pow((fila_valores[j] - punto[j]), 2)
     # Aplica raiz cuadrada a los dos resultados de los centroides
     distancias = [abs(np.sqrt(distancia)) for distancia in distancias]
     return distancias
@@ -68,3 +69,17 @@ def obtener_conjuntos_de_datos(conjunto):
 
 def flattenList(list):
     return [item for sublist in list for item in sublist]
+
+def imprimir_matriz(conjunto):
+    with np.printoptions(precision=3, suppress=True):
+        print(conjunto)
+
+def multiplicar_listas(lista1, lista2):
+	resultado = 0
+	for i in range(len(lista1)):
+		#w0*x0+w1*x1...+wn*xn
+		resultado += lista1[i] * lista2[i]
+	return resultado
+
+def obtener_random(conjunto):
+    return random.randint(0, len(conjunto) - 1)
