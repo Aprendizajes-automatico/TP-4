@@ -26,15 +26,19 @@ def agrupamiento_jerarquico(conjunto, criterio):
         imprimir_matriz(matriz_distancias)
         #matriz_distancias = eliminar_fila_columna(matriz_distancias, fila2)
         nombre_nuevo_grupo = f'({fila1} - {fila2})'
-        indices_nuevo_grupo = [fila1, fila2]
+        # Se repite pero porque estos son los indices
+        indices_filas_del_nuevo_grupo = [fila1, fila2]
 
         if(fila2 >= len(conjunto)):
-            nombre_grupo_a_unir = grupos[fila2]['nombre']
+            grupo_a_mergear = grupos[fila2]
+            nombre_grupo_a_unir = grupo_a_mergear['nombre']
             nombre_nuevo_grupo = f'({nombre_grupo_a_unir} - {fila1})'
+            indices_filas_del_nuevo_grupo = [*grupo_a_mergear['indices'], fila1]
         nuevo_grupo = {
             'nombre': nombre_nuevo_grupo,
             'distancia': distancia,
-            'key': indice_nuevo_grupo
+            'key': indice_nuevo_grupo,
+            'indices': indices_filas_del_nuevo_grupo
         }
         grupos.append(nuevo_grupo)
         print(fila1, " - ", fila2)
