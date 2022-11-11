@@ -11,10 +11,10 @@ def sacar_clase_primaria_pd(conjunto):
 def sacar_clase_primaria_np(conjunto):
     return conjunto.iloc[:, :-1]
 
-def filtrar_por_clase_primaria_v2(conjunto, clase):
+def filtrar_por_clase_primaria_np(conjunto, clase):
     return conjunto[conjunto[:,-1] == clase]
 
-def sacar_clase_primaria_v2(conjunto):
+def sacar_clase_primaria_np(conjunto):
     return np.delete(conjunto, -1, axis=1)
 
 def quedarse_valores_clase_primaria(conjunto):

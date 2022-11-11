@@ -1,6 +1,6 @@
 import random
 import numpy as np
-from utils import obtener_distancias, filtrar_por_clase_primaria_v2, sacar_clase_primaria_v2
+from utils import obtener_distancias, filtrar_por_clase_primaria_np, sacar_clase_primaria_np
 
 def poner_clase_aleatoria(conjunto, k):
     lista_clases = []
@@ -9,7 +9,7 @@ def poner_clase_aleatoria(conjunto, k):
     return conjunto.assign(sigdz=lista_clases)
 
 
-def kMediasNp(conjunto_original, k, iter_max = 100):
+def kMedias(conjunto_original, k, iter_max = 100):
     iter = 0
     # Inicializa el conjunto_actualizado vacío -> []
     conjunto_actualizado = np.zeros(0)
@@ -27,7 +27,7 @@ def kMediasNp(conjunto_original, k, iter_max = 100):
         # Obtiene los valores de los centroides. Esto devuelve una lista de K Centroides -> [[1,2,3,4], [4,5,6,7]]
         centroides = obtener_centroides(conjunto_original, cantidad_columnas, k)
         #Saca la columna de la clase primaria. (Tiene que ser la última de la derecha)
-        conjunto_sin_clase_primaria = sacar_clase_primaria_v2(conjunto_original)
+        conjunto_sin_clase_primaria = sacar_clase_primaria_np(conjunto_original)
         # Itera por cantidad totales de filas. Son todos los datos del conjunto
         for i in range(len(conjunto_sin_clase_primaria)):
             distancias = obtener_distancias(conjunto_original[i], centroides)
@@ -39,8 +39,8 @@ def kMediasNp(conjunto_original, k, iter_max = 100):
 def obtener_centroides(conjunto_original, cantidad_columnas, k):
     centroides = []
     for k in range(k):
-        conjunto_clase_k = filtrar_por_clase_primaria_v2(conjunto_original, k)
-        conjunto_clase_k_sin_primaria = sacar_clase_primaria_v2(conjunto_clase_k)
+        conjunto_clase_k = filtrar_por_clase_primaria_np(conjunto_original, k)
+        conjunto_clase_k_sin_primaria = sacar_clase_primaria_np(conjunto_clase_k)
         centroide_xi = []
         for indice_columna in range(cantidad_columnas):
             suma_total_columna = conjunto_clase_k_sin_primaria[:,indice_columna].sum()

@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-from kMedias import poner_clase_aleatoria, kMediasNp
+from kMedias import poner_clase_aleatoria, kMedias
 from utils import sacar_clase_primaria_pd, estandarizar_atributos, quedarse_valores_clase_primaria
 from AgrupamientoJerarquico import agrupamiento_jerarquico, criterio_minimo, criterio_maximo, plotear_agrupamiento
 from Kohonen import Kohonen, KohonenEtiquetar
@@ -17,7 +17,7 @@ actual_X.dropna(subset=['choleste'], inplace=True)
 k = 2
 actual_con_clase_aleatoria = poner_clase_aleatoria(actual_X, k)
 actual_estandarizado = estandarizar_atributos(actual_con_clase_aleatoria, ['age', 'cad.dur', 'choleste' ]).to_numpy()
-#agrupamiento_k_medias = kMediasNp(actual_estandarizado, k)
+agrupamiento_k_medias = kMedias(actual_estandarizado, k)
 
 #agrupamiento_jerarquico(actual_estandarizado, criterio_minimo)
 #agrupamiento_jerarquico(actual_estandarizado, criterio_maximo)
@@ -26,7 +26,7 @@ actual_estandarizado = estandarizar_atributos(actual_con_clase_aleatoria, ['age'
 print("------------------")
 pesos = Kohonen(actual_estandarizado)
 KohonenEtiquetar(actual_estandarizado, pesos)
-"""
 
 pesos = Kohonen(iris.to_numpy())
 KohonenEtiquetar(iris.to_numpy(), pesos)
+"""

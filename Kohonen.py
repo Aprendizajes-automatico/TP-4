@@ -1,5 +1,5 @@
 import numpy as np
-from utils import sacar_clase_primaria_v2, obtener_random, obtener_distancias, quedarse_valores_clase_primaria
+from utils import sacar_clase_primaria_np, obtener_random, obtener_distancias, quedarse_valores_clase_primaria
 from math import e
 
 def Kohonen(conjunto):
@@ -58,7 +58,7 @@ def KohonenEtiquetar(conjunto, pesos):
 
 
 def inicializar_pesos(conjunto, cantidad_neuronas):
-    nuevo_conjunto = sacar_clase_primaria_v2(conjunto)
+    nuevo_conjunto = sacar_clase_primaria_np(conjunto)
     pesos = [[[] for j in range(0, cantidad_neuronas)] for i in range(0, cantidad_neuronas)]
     for i in range(cantidad_neuronas):
         for j in range(cantidad_neuronas):
