@@ -6,7 +6,7 @@ from AgrupamientoJerarquico import agrupamiento_jerarquico, criterio_minimo, cri
 from Kohonen import Kohonen, KohonenEtiquetar
 import som as SOM
 
-conjunto = pd.read_csv("acath.csv", encoding= 'unicode_escape')
+conjunto = pd.read_csv("acath2.csv", encoding= 'unicode_escape')
 iris = pd.read_csv("Iris.csv", encoding= 'unicode_escape')
 actual_Y = conjunto.iloc[:, -1]
 actual_X = sacar_clase_primaria_pd(conjunto)
@@ -17,9 +17,9 @@ actual_X.dropna(subset=['choleste'], inplace=True)
 k = 2
 actual_con_clase_aleatoria = poner_clase_aleatoria(actual_X, k)
 actual_estandarizado = estandarizar_atributos(actual_con_clase_aleatoria, ['age', 'cad.dur', 'choleste' ]).to_numpy()
-agrupamiento_k_medias = kMedias(actual_estandarizado, k)
-
-#agrupamiento_jerarquico(actual_estandarizado, criterio_minimo)
+#agrupamiento_k_medias = kMedias(actual_estandarizado, k)
+#print(agrupamiento_k_medias)
+agrupamiento_jerarquico(actual_estandarizado, criterio_minimo)
 #agrupamiento_jerarquico(actual_estandarizado, criterio_maximo)
 #plotear_agrupamiento(actual_estandarizado)
 """
