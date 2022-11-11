@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 from kMedias import poner_clase_aleatoria, kMedias
 from utils import sacar_clase_primaria_pd, estandarizar_atributos, quedarse_valores_clase_primaria
-from AgrupamientoJerarquico import agrupamiento_jerarquico, criterio_minimo, criterio_maximo, plotear_agrupamiento
+from AgrupamientoJerarquico import agrupamiento_jerarquico, criterio_minimo, criterio_maximo, plotear_agrupamiento, criterio_centroide
 from Kohonen import Kohonen, KohonenEtiquetar
 import som as SOM
 
@@ -19,9 +19,10 @@ actual_con_clase_aleatoria = poner_clase_aleatoria(actual_X, k)
 actual_estandarizado = estandarizar_atributos(actual_con_clase_aleatoria, ['age', 'cad.dur', 'choleste' ]).to_numpy()
 #agrupamiento_k_medias = kMedias(actual_estandarizado, k)
 #print(agrupamiento_k_medias)
-agrupamiento_jerarquico(actual_estandarizado, criterio_minimo)
+#agrupamiento_jerarquico(actual_estandarizado, criterio_minimo)
 #agrupamiento_jerarquico(actual_estandarizado, criterio_maximo)
-#plotear_agrupamiento(actual_estandarizado)
+agrupamiento_jerarquico(actual_estandarizado, criterio_centroide)
+plotear_agrupamiento(actual_estandarizado)
 """
 print("------------------")
 pesos = Kohonen(actual_estandarizado)

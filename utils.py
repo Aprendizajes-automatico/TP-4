@@ -83,3 +83,6 @@ def multiplicar_listas(lista1, lista2):
 
 def obtener_random(conjunto):
     return random.randint(0, len(conjunto) - 1)
+
+def obtener_valores_en_conjunto(conjunto, indices):
+    return np.array([list(conjunto[fila]) for fila in indices])
