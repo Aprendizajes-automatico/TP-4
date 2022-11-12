@@ -17,10 +17,8 @@ def agrupamiento_jerarquico(conjunto, criterio):
     while (numero_de_grupos != len(grupos)):
         # Obtengo el índice del merge que voy a hacer entre 2 grupos
         indice_nuevo_grupo = len(grupos)
-        # Obtengo el mínimo    
+        # Obtengo el mínimo
         distancia, fila1, fila2 = obtener_minimo(matriz_distancias)
-        
-
         grupo_a_mergear_1 = grupos[fila1]
         grupo_a_mergear_2 = grupos[fila2]
         nombre_grupo_a_unir_1 = grupo_a_mergear_1['nombre']
@@ -32,9 +30,7 @@ def agrupamiento_jerarquico(conjunto, criterio):
             'indices': [*grupo_a_mergear_2['indices'], *grupo_a_mergear_1['indices']]
         }
         grupos.append(nuevo_grupo)
-        print(fila1, " - ", fila2)
-        distancias = criterio(matriz_distancias, fila1, fila2, grupos, conjunto)        
-        print(distancias)
+        distancias = criterio(matriz_distancias, fila1, fila2, grupos, conjunto)
         matriz_distancias = agregar_nuevas_distancias(matriz_distancias, distancias, indice_nuevo_grupo)
         matriz_distancias = poner_ceros_en_fila_columna(matriz_distancias, [fila1, fila2])       
         imprimir_matriz(matriz_distancias)
@@ -79,22 +75,21 @@ def criterio_maximo(matriz, fila1, fila2, _, __):
 def criterio_centroide(matriz, fila1, fila2, grupos, conjunto):        
     indices_valores_grupo = [*grupos[fila1]['indices'], *grupos[fila2]['indices']]
     valores_grupo = obtener_valores_en_conjunto(conjunto, indices_valores_grupo)
-    centroide_nuevo_grupo = obtener_centroide(valores_grupo)
+    centroide_nuevo_grupo = obtener_centroide(valores_grupo)    
     distancias = []
     for i in range(len(matriz[0])):
         try:
             valores_a_comparar = obtener_valores_en_conjunto(conjunto, grupos[i]['indices'])
             if(np.sum(matriz[i]) != 0 and i != fila1 and i != fila2):
                 centroide_a_comparar = obtener_centroide(valores_a_comparar)
-                distancias.append(obtener_distancias(centroide_nuevo_grupo, [centroide_a_comparar]))
+                distancias.append(obtener_distancias(centroide_nuevo_grupo, [centroide_a_comparar])[0])
             else:
-                distancias.append([0])        
+                distancias.append(0)        
         except IndexError:
             pass
     for _ in range(len(matriz) - len(distancias)):
-        distancias.append([0])
-
-    return flattenList(distancias)
+        distancias.append(0)
+    return distancias
 
 def obtener_centroide(valores_grupo):
     centroide = []
@@ -105,7 +100,7 @@ def obtener_centroide(valores_grupo):
 
 def plotear_agrupamiento(conjunto):
     conjunto_a_plotear = sacar_clase_primaria_np(conjunto)
-    dendrogram = sch.dendrogram(sch.linkage(conjunto_a_plotear, method = 'centroid'))
+    dendrogram = sch.dendrogram(sch.linkage(conjunto_a_plotear, method = 'centroid', optimal_ordering=True))
     plt.title('Dendograma')
     plt.xlabel('Indice - Fila')
     plt.ylabel('Distancia')
