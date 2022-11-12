@@ -86,3 +86,12 @@ def obtener_random(conjunto):
 
 def obtener_valores_en_conjunto(conjunto, indices):
     return np.array([list(conjunto[fila]) for fila in indices])
+
+def agregar_nuevas_distancias(matriz, distancias, indice_nuevo_grupo):
+    nuevas_matriz = np.copy(matriz)
+    nuevas_matriz[indice_nuevo_grupo] = distancias
+    for i in range(len(nuevas_matriz)):
+        for j in range(len(nuevas_matriz[0])):
+            if(j == indice_nuevo_grupo):
+                nuevas_matriz[i][j] = distancias[i]
+    return nuevas_matriz

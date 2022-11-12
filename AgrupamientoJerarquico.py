@@ -1,4 +1,4 @@
-from utils import imprimir_matriz, obtener_distancias, eliminar_fila_columna, poner_ceros_en_fila_columna, sacar_clase_primaria_np, obtener_valores_en_conjunto, flattenList
+from utils import imprimir_matriz, obtener_distancias, poner_ceros_en_fila_columna, sacar_clase_primaria_np, obtener_valores_en_conjunto, flattenList, agregar_nuevas_distancias
 import numpy as np
 import scipy.cluster.hierarchy as sch
 import matplotlib.pyplot as plt
@@ -19,29 +19,25 @@ def agrupamiento_jerarquico(conjunto, criterio):
         indice_nuevo_grupo = len(grupos)
         # Obtengo el mínimo    
         distancia, fila1, fila2 = obtener_minimo(matriz_distancias)
-        nombre_nuevo_grupo = f'({fila1} - {fila2})'
-        # Se repite pero porque estos son los indices
-        indices_filas_del_nuevo_grupo = [fila1, fila2]
-        # Este if se hace para preguntar si estás uniendo con un grupo ya existente (4-5) -> (4-5-3)
-        if(fila2 >= len(conjunto)):
-            grupo_a_mergear_1 = grupos[fila1]
-            grupo_a_mergear_2 = grupos[fila2]
-            nombre_grupo_a_unir = grupo_a_mergear_2['nombre']
-            nombre_nuevo_grupo = f'({nombre_grupo_a_unir} - {grupos[fila1]})'
-            indices_filas_del_nuevo_grupo = [*grupo_a_mergear_2['indices'], fila1]
+        
+
+        grupo_a_mergear_1 = grupos[fila1]
+        grupo_a_mergear_2 = grupos[fila2]
+        nombre_grupo_a_unir_1 = grupo_a_mergear_1['nombre']
+        nombre_grupo_a_unir_2 = grupo_a_mergear_2['nombre']
         nuevo_grupo = {
-            'nombre': nombre_nuevo_grupo,
+            'nombre': f'({nombre_grupo_a_unir_2} - {nombre_grupo_a_unir_1})',
             'distancia': distancia,
             'key': indice_nuevo_grupo,
-            'indices': indices_filas_del_nuevo_grupo
+            'indices': [*grupo_a_mergear_2['indices'], *grupo_a_mergear_1['indices']]
         }
         grupos.append(nuevo_grupo)
         print(fila1, " - ", fila2)
-        #print(grupos)
-        imprimir_matriz(matriz_distancias)
-        distancias = criterio(matriz_distancias, fila1, fila2, grupos, conjunto)
-        matriz_distancias[indice_nuevo_grupo] = distancias
+        distancias = criterio(matriz_distancias, fila1, fila2, grupos, conjunto)        
+        print(distancias)
+        matriz_distancias = agregar_nuevas_distancias(matriz_distancias, distancias, indice_nuevo_grupo)
         matriz_distancias = poner_ceros_en_fila_columna(matriz_distancias, [fila1, fila2])       
+        imprimir_matriz(matriz_distancias)
         print("-----------------")
       
     print("-----------------")
@@ -91,12 +87,13 @@ def criterio_centroide(matriz, fila1, fila2, grupos, conjunto):
             if(np.sum(matriz[i]) != 0 and i != fila1 and i != fila2):
                 centroide_a_comparar = obtener_centroide(valores_a_comparar)
                 distancias.append(obtener_distancias(centroide_nuevo_grupo, [centroide_a_comparar]))
+            else:
+                distancias.append([0])        
         except IndexError:
             pass
     for _ in range(len(matriz) - len(distancias)):
         distancias.append([0])
 
-    print(distancias)
     return flattenList(distancias)
 
 def obtener_centroide(valores_grupo):
