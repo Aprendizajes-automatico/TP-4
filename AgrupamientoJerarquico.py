@@ -17,12 +17,14 @@ def agrupamiento_jerarquico(conjunto, criterio):
     while (numero_de_grupos != len(grupos)):
         # Obtengo el índice del merge que voy a hacer entre 2 grupos
         indice_nuevo_grupo = len(grupos)
-        # Obtengo el mínimo
+        # Obtengo el mínimo    
         distancia, fila1, fila2 = obtener_minimo(matriz_distancias)
+        
+
         grupo_a_mergear_1 = grupos[fila1]
         grupo_a_mergear_2 = grupos[fila2]
         nombre_grupo_a_unir_1 = grupo_a_mergear_1['nombre']
-        nombre_grupo_a_unir_2 = grupo_a_mergear_2['nombre']
+        nombre_grupo_a_unir_2 = grupo_a_mergear_2['nombre']        
         nuevo_grupo = {
             'nombre': f'({nombre_grupo_a_unir_2} - {nombre_grupo_a_unir_1})',
             'distancia': distancia,
@@ -33,6 +35,8 @@ def agrupamiento_jerarquico(conjunto, criterio):
         distancias = criterio(matriz_distancias, fila1, fila2, grupos, conjunto)
         matriz_distancias = agregar_nuevas_distancias(matriz_distancias, distancias, indice_nuevo_grupo)
         matriz_distancias = poner_ceros_en_fila_columna(matriz_distancias, [fila1, fila2])       
+        print("-----------------")
+        print(fila1, " - ", fila2)
         imprimir_matriz(matriz_distancias)
         print("-----------------")
       
@@ -103,5 +107,5 @@ def plotear_agrupamiento(conjunto):
     dendrogram = sch.dendrogram(sch.linkage(conjunto_a_plotear, method = 'centroid', optimal_ordering=True))
     plt.title('Dendograma')
     plt.xlabel('Indice - Fila')
-    plt.ylabel('Distancia')
+    plt.ylabel('Height')
     plt.show()
