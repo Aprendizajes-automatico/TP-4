@@ -7,7 +7,7 @@ def agrupamiento_jerarquico(conjunto, criterio):
     numero_de_grupos = len(conjunto) * 2 - 1
     matriz_distancias = np.zeros((numero_de_grupos, numero_de_grupos))
     # Valor, punto1 , punto2
-    grupos = [{'nombre': str(i), 'distancia': 0, 'key': i, 'indices': [i]} for i in range(len(conjunto))]
+    grupos = [{'distancia': 0, 'key': i, 'indices': [i]} for i in range(len(conjunto))]
 
     for i, punto1 in enumerate(conjunto):
         for j, punto2 in enumerate(conjunto):
@@ -23,13 +23,10 @@ def agrupamiento_jerarquico(conjunto, criterio):
 
         grupo_a_mergear_1 = grupos[fila1]
         grupo_a_mergear_2 = grupos[fila2]
-        nombre_grupo_a_unir_1 = grupo_a_mergear_1['nombre']
-        nombre_grupo_a_unir_2 = grupo_a_mergear_2['nombre']        
         nuevo_grupo = {
-            'nombre': f'({nombre_grupo_a_unir_2} - {nombre_grupo_a_unir_1})',
             'distancia': distancia,
             'key': indice_nuevo_grupo,
-            'indices': [*grupo_a_mergear_2['indices'], *grupo_a_mergear_1['indices']]
+            'indices': [*grupo_a_mergear_2['indices'], *grupo_a_mergear_1['indices']],
         }
         grupos.append(nuevo_grupo)
         distancias = criterio(matriz_distancias, fila1, fila2, grupos, conjunto)

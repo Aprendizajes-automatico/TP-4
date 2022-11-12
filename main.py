@@ -4,7 +4,7 @@ from kMedias import poner_clase_aleatoria, kMedias
 from utils import sacar_clase_primaria_pd, estandarizar_atributos, quedarse_valores_clase_primaria,sacar_clase_primaria_np
 from AgrupamientoJerarquico import agrupamiento_jerarquico, criterio_minimo, criterio_maximo, plotear_agrupamiento, criterio_centroide
 from Kohonen import Kohonen, KohonenEtiquetar
-import som as SOM
+import matplotlib.pyplot as plt
 
 conjunto = pd.read_csv("acath2.csv", encoding= 'unicode_escape')
 iris = pd.read_csv("Iris.csv", encoding= 'unicode_escape')
@@ -22,10 +22,9 @@ actual_estandarizado = estandarizar_atributos(actual_con_clase_aleatoria, ['cad.
 #print(agrupamiento_k_medias)
 #agrupamiento_jerarquico(actual_estandarizado, criterio_minimo)
 #agrupamiento_jerarquico(actual_estandarizado, criterio_maximo)
-agrupamiento_jerarquico(actual_estandarizado, criterio_centroide)
+#agrupamiento_jerarquico(actual_estandarizado, criterio_centroide)
 plotear_agrupamiento(actual_estandarizado)
 
-import matplotlib.pyplot as plt
 a_plotear = sacar_clase_primaria_np(actual_estandarizado)
 X = a_plotear[:,0]
 Y = a_plotear[:,-1]
