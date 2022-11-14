@@ -47,3 +47,9 @@ def obtener_centroides(conjunto_original, cantidad_columnas, k):
             centroide_xi.append(suma_total_columna / len(conjunto_clase_k_sin_primaria))
         centroides.append(centroide_xi)
     return centroides
+
+def obtener_accurracy_kMedias(pred_Y, actual_Y):
+    for clase in np.unique(pred_Y):
+        indices_clase = [i for (i, pred) in enumerate(pred_Y) if pred == int(clase)]
+        cantidad_enfermos = sum([0 if (i not in indices_clase or actual_Y[i] == 0) else 1  for i in range(len(actual_Y))])
+        print(f"La clase {clase} tiene una probabilidad de {round(cantidad_enfermos / len(indices_clase) * 100, 2)}% tener la enfermedad. ")

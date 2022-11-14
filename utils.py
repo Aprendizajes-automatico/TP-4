@@ -1,6 +1,9 @@
 import numpy as np
 import math
 import random
+from sklearn.metrics import confusion_matrix
+from sklearn.metrics import accuracy_score
+from sklearn.metrics import precision_score
 
 def filtrar_por_clase_primaria(conjunto, clase):
     return conjunto.where(conjunto['sigdz'] == clase)
