@@ -73,10 +73,10 @@ def criterio_maximo(matriz, fila1, fila2, _, __):
             distancias_maximas.append(x if x > y else y)
     return distancias_maximas
 
-def criterio_centroide(matriz, fila1, fila2, grupos, conjunto):        
+def criterio_centroide(matriz, fila1, fila2, grupos, conjunto):
     indices_valores_grupo = [*grupos[fila1]['indices'], *grupos[fila2]['indices']]
     valores_grupo = obtener_valores_en_conjunto(conjunto, indices_valores_grupo)
-    centroide_nuevo_grupo = obtener_centroide(valores_grupo)    
+    centroide_nuevo_grupo = obtener_centroide(valores_grupo)
     distancias = []
     for i in range(len(matriz[0])):
         try:
@@ -85,12 +85,31 @@ def criterio_centroide(matriz, fila1, fila2, grupos, conjunto):
                 centroide_a_comparar = obtener_centroide(valores_a_comparar)
                 distancias.append(obtener_distancias(centroide_nuevo_grupo, [centroide_a_comparar])[0])
             else:
-                distancias.append(0)        
+                distancias.append(0)
         except IndexError:
             pass
     for _ in range(len(matriz) - len(distancias)):
         distancias.append(0)
     return distancias
+
+def criterio_promedio(matriz, fila1, fila2, grupos, conjunto):
+    indices_valores_grupo = [*grupos[fila1]['indices'], *grupos[fila2]['indices']]
+    valores_grupo = obtener_valores_en_conjunto(conjunto, indices_valores_grupo)    
+    distancias = []
+    for i in range(len(matriz[0])):
+        try:
+            valores_a_comparar = obtener_valores_en_conjunto(conjunto, grupos[i]['indices'])
+            if(np.sum(matriz[i]) != 0 and i != fila1 and i != fila2):
+                distancia = sum([distancia / (len(valores_grupo[0]) - 1) for distancia in obtener_distancias(valores_a_comparar[0], valores_grupo)])
+                distancias.append(distancia)
+            else:
+                distancias.append(0)
+        except IndexError:
+            pass
+    for _ in range(len(matriz) - len(distancias)):
+        distancias.append(0)
+    return distancias
+
 
 def obtener_centroide(valores_grupo):
     centroide = []
@@ -101,7 +120,7 @@ def obtener_centroide(valores_grupo):
 
 def plotear_agrupamiento(conjunto):
     conjunto_a_plotear = sacar_clase_primaria_np(conjunto)
-    dendrogram = sch.dendrogram(sch.linkage(conjunto_a_plotear, method = 'centroid', optimal_ordering=True))
+    dendrogram = sch.dendrogram(sch.linkage(conjunto_a_plotear, method = 'average', optimal_ordering=True))
     plt.title('Dendograma')
     plt.xlabel('Indice - Fila')
     plt.ylabel('Height')
